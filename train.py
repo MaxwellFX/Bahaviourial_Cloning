@@ -1,8 +1,6 @@
 import numpy as np
 import dataAcquisition
 from Training_Model import Model_Class
-import matplotlib.pyplot as plt
-
 
 GIVEN_DATA_PATH = '../../Assets/data/sampleTrainingData/'
 MY_DATA_PATH = '../../Assets/data/myData/'
@@ -20,7 +18,7 @@ y_train = np.array(steering_angles)
 # validation_generator = dataAcquisition.data_generator(ACTING_PATH, validationData, 128)
 
 oModel = Model_Class({
-    'input_shape': (160, 320, 2),
+    'input_shape': (160, 320, 3),
     'crop_range': (65, 25),
     'l2_weight': 0.001,
     'activation': 'elu',
@@ -31,7 +29,7 @@ oModel.build_model()
 oModel.fit_model({
     'X_train': X_train,
     'y_train': y_train,
-    'epochs': 3,
+    'epochs': 7,
     'validation_split': 0.2,
 })
 

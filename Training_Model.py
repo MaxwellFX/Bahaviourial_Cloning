@@ -13,26 +13,27 @@ class Model_Class:
         self.lossFunction = settings["loss"]
         self.optimizerMethod = settings["optimizer"]
         self.history_object = None
+        self.model = None
     
     def build_model(self):
         self.model = Sequential()
         self.model.add(Lambda(lambda x : x/255.0 - 0.5 , input_shape = self.inputShape))
         
         if self.cropRange is not None:
-            self.model.add(Cropping2D(cropping=(self.cropRange, (0, 0))))
-        self.model.add(Conv2D(filters=24, kernel_size=5, strides=(2, 2), kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Conv2D(filters=36, kernel_size=5, strides=(2, 2), kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Conv2D(filters=48, kernel_size=5, strides=(2, 2), kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Conv2D(filters=64, kernel_size=3, strides=(1, 1), kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Conv2D(filters=64, kernel_size=3, strides=(1, 1), kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+            self.model.add(Cropping2D(cropping=(self.cropRange, (0, 0))))   
+        self.model.add(Conv2D(filters=24, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Conv2D(filters=36, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Conv2D(filters=48, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Conv2D(filters=64, kernel_size=3, strides=(1, 1), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Conv2D(filters=64, kernel_size=3, strides=(1, 1), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
         
         self.model.add(Flatten())
-        self.model.add(Dense(100, kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Dense(50, kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Dense(10, kernal_regularizer = self.kernalRegularizer, activation = self.activationMethod))
-        self.model.add(Dense(1))
+        self.model.add(Dense(100, kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Dense(50, kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Dense(10, kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
+        self.model.add(Dense(1))        
         self.model.compile(loss = self.lossFunction, optimizer = self.optimizerMethod)
-    
+
     def fit_model(self, oSettings):
         if self.model is None:
             self.build_model()
