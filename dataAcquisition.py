@@ -65,7 +65,8 @@ def get_samples(data_path, lines):
 def data_split(lines, valid_size):
     return train_test_split(lines, test_size = valid_size)
 
-def get_batchLine_data(data_path, batch_line):
+# Most likely won't using these because running fit_generator is miserably slow on my local machine
+def _retrive_batchLine_data(data_path, batch_line):
     img_path = data_path + 'IMG/'
 
     steering_angle = np.float32(batch_line[3])
@@ -104,7 +105,7 @@ def data_generator(data_path, samples, batch_size=128):
             images, steering_angles = [], []
  
             for batch_sample in batch_samples:
-                augmented_images, augmented_angles = get_batchLine_data(data_path, batch_sample)
+                augmented_images, augmented_angles = _retrive_batchLine_data(data_path, batch_sample)
                 images.extend(augmented_images)
                 steering_angles.extend(augmented_angles)
  
