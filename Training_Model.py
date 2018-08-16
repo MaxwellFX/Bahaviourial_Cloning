@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 class Model_Class:
     def __init__(self, settings):
         self.inputShape = settings["input_shape"]
-        self.cropRange = settings["crop_range"]
         self.kernalRegularizer = l2(settings["l2_weight"])
         self.activationMethod = settings["activation"]
         self.lossFunction = settings["loss"]
@@ -19,8 +18,6 @@ class Model_Class:
         self.model = Sequential()
         self.model.add(Lambda(lambda x : x/255.0 - 0.5 , input_shape = self.inputShape))
         
-        if self.cropRange is not None:
-            self.model.add(Cropping2D(cropping=(self.cropRange, (0, 0))))   
         self.model.add(Conv2D(filters=24, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
         self.model.add(Conv2D(filters=36, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
         self.model.add(Conv2D(filters=48, kernel_size=5, strides=(2, 2), kernel_regularizer = self.kernalRegularizer, activation = self.activationMethod))
