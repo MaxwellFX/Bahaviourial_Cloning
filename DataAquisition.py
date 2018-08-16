@@ -1,7 +1,7 @@
 import csv
 import numpy as np
 
-def getDriveLogs(csv_path):
+def get_driveLog(csv_path):
     """Public: get the driving log 
         
     @Param:
@@ -10,10 +10,10 @@ def getDriveLogs(csv_path):
         driving_log = list(csv.reader(csvfile, skipinitialspace = True, delimiter = ',', quoting = csv.QUOTE_NONE))
     return driving_log[1:]
 
-def isDrivingTooSlow(fSpeed):
+def is_too_slow(fSpeed):
     return fSpeed < 2.0
 
-def getSamplePath(data_paths, aDataToUse, bUdacityData = True):
+def get_dataSample_path(data_paths, aDataToUse, bHasUdacityData = True):
     image_paths = []
     steering_angles = []
 
@@ -21,15 +21,16 @@ def getSamplePath(data_paths, aDataToUse, bUdacityData = True):
         if not aDataToUse[i]:
             print("skipping dataset: ", i)
             continue
-        driving_log = getDriveLogs(data_paths[i])
+        driving_log = get_driveLog(data_paths[i])
 
         for line in driving_log:
-            if isDrivingTooSlow(float(line[6])):
+            if is_too_slow(float(line[6])):
                 continue
             
             fCorrection = 0.20
             fSteeringAngle = float(line[3])
-            if bUdacityData:
+            # Lazy work around due to udacity's different path format :/
+            if bHasUdacityData:
                 image_paths.append(data_paths[i] + line[0]) # center image
                 steering_angles.append(fSteeringAngle)
 

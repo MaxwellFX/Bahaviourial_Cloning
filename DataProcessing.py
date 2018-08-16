@@ -6,8 +6,8 @@ import numpy as np
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
-def data_split(lines, valid_size):
-    return train_test_split(lines, test_size = valid_size)
+def data_split(X, y, valid_size, randomState):
+    return train_test_split(X, y, test_size = valid_size, random_state = randomState)
 
 def get_steering_angle_distribution(steering_angles, num_classes):
     return np.histogram(steering_angles, num_classes)

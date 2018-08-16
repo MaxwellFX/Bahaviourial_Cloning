@@ -1,25 +1,49 @@
-import numpy as np
-import dataAcquisition
+import DataAquisition
+import DataProcessing
+import DataVisualization
+
 from Training_Model import Model_Class
 
-GIVEN_DATA_PATH = '../../Assets/data/sampleTrainingData/'
-MY_DATA_PATH = '../../Assets/data/myData/'
+# select data source(s) here
+use_my_data = False
+use_udacity_data = True
+use_track1 = False
+use_track1_reverse = True
+use_track1_corners = True
+use_track2 = True
 
-ACTING_PATH = MY_DATA_PATH
+data_to_use = [use_my_data, 
+               use_udacity_data, 
+               use_track1, 
+               use_track1_reverse, 
+               use_track1_corners, 
+               use_track2]
 
-lines = dataAcquisition.get_driveLogs(ACTING_PATH)
+data_paths = ['../../Assets/data/myData/', 
+              '../../Assets/data/sampleTrainingData/', 
+              '../../Assets/data/Track1/', 
+              '../../Assets/data/Track1Reverse/', 
+              '../../Assets/data/Track1Corners/', 
+              '../../Assets/data/Track2/']
 
-images, steering_angles = dataAcquisition.get_samples(ACTING_PATH, lines)
-X_train = np.array(images)
-y_train = np.array(steering_angles)
- 
-# trainingSample, validationData = dataAcquisition.data_split(lines, 0.2)
-# train_generator = dataAcquisition.data_generator(ACTING_PATH, trainingSample, 128)
-# validation_generator = dataAcquisition.data_generator(ACTING_PATH, validationData, 128)
+image_paths, steering_angles = DataAquisition.get_dataSample_path(data_paths, data_to_use, bHasUdacityData = True)
+
+
+image_paths, steering_angles = DataProcessing.data_normalization({
+    'num_classes': 50, 
+    'count_cutoff': int(len(steering_angles)/50),
+    'image_paths': image_paths,
+    'steering_angles': steering_angles
+})
+
+train_paths, valid_paths, train_angles, valid_angles = DataProcessing.data_split(image_paths, steering_angles, 0.2, 50)
+X_train, y_train = DataProcessing.generate_processed_data(train_paths, train_angles)
+X_valid, y_valid = DataProcessing.generate_processed_data(valid_paths, valid_angles, validation_flag = True)
+
+# X_data, y_data = DataProcessing.generate_processed_data(image_paths, steering_angles)
 
 oModel = Model_Class({
-    'input_shape': (160, 320, 3),
-    'crop_range': (65, 25),
+    'input_shape': (66, 200, 3),
     'l2_weight': 0.001,
     'activation': 'elu',
     'loss': 'mse',
@@ -31,17 +55,10 @@ oModel.fit_model({
     'y_train': y_train,
     'epochs': 7,
     'validation_split': 0.2,
+    'validation_data': (X_valid, y_valid)
 })
 
-# oModel.fit_generator({
-#     'train_generator': train_generator,
-#     'train_sample_len': len(trainingSample),
-#     'epochs': 3,
-#     'validation_generator': validation_generator,
-#     'valid_sample_len': len(validationData)
-# })
-
-oModel.save('model.h5')
+oModel.save('model1.h5')
 oModel.visualize_loss()
 
 

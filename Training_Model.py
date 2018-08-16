@@ -38,7 +38,8 @@ class Model_Class:
                                             oSettings["y_train"], 
                                             epochs = oSettings["epochs"], 
                                             verbose = 1, 
-                                            validation_split = oSettings["validation_split"], 
+                                            validation_split = oSettings["validation_split"],
+                                            validation_data = oSettings["validation_data"], 
                                             shuffle = True)
 
     def fit_generator(self, oSettings):
