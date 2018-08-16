@@ -15,6 +15,7 @@ class Model_Class:
         self.model = None
     
     def build_model(self):
+        """using the nVidia model"""
         self.model = Sequential()
         self.model.add(Lambda(lambda x : x/255.0 - 0.5 , input_shape = self.inputShape))
         
@@ -42,15 +43,6 @@ class Model_Class:
                                             validation_data = oSettings["validation_data"], 
                                             shuffle = True)
 
-    def fit_generator(self, oSettings):
-        if self.model is None:
-            self.build_model()
-        self.history_object = self.model.fit_generator(oSettings["train_generator"], 
-                                    steps_per_epoch = oSettings["train_sample_len"], 
-                                    epochs = oSettings["epochs"], 
-                                    verbose = 1, 
-                                    validation_data = oSettings["validation_generator"],
-                                    validation_steps = oSettings["valid_sample_len"])
     def save(self, sFileName):
         self.model.save(sFileName)
     
