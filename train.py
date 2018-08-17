@@ -1,6 +1,7 @@
 import DataAquisition
 import DataProcessing
 import DataVisualization
+from keras import optimizers
 
 from Training_Model import Model_Class
 
@@ -30,13 +31,14 @@ X_valid, y_valid = DataProcessing.generate_processed_data(valid_paths, valid_ang
 
 # X_data, y_data = DataProcessing.generate_processed_data(image_paths, steering_angles)
 
+optimizer = optimizers.Adam(lr=0.0001)
 # Initialize all the parameters for the model
 oModel = Model_Class({
     'input_shape': (66, 200, 3),
     'l2_weight': 0.001,
     'activation': 'elu',
     'loss': 'mse',
-    'optimizer': 'adam'
+    'optimizer': optimizer
 })
 
 # Build the traning model
@@ -46,7 +48,7 @@ oModel.build_model()
 oModel.fit_model({
     'X_train': X_train,
     'y_train': y_train,
-    'epochs': 7,
+    'epochs': 15,
     'validation_split': None,
     'validation_data': (X_valid, y_valid)
 })
