@@ -172,5 +172,9 @@ Lastly, I found by tuning the learning rate smaller make the vehicle drives smoo
 
 Here is the final result:
 
-<p align="center"><a href="https://youtu.be/Rnxg7CEsRx0"><img src="./writeupImages/track1_thumb_nail.PNG"  width="300"></a></p> <p align="center"><a href="https://youtu.be/g91YVj5ysgc?t=14s"><img src="./writeupImages/track2_thumb_nail.jpg"  width="300"></a></p>                   
+<p align="center"><a href="https://youtu.be/Rnxg7CEsRx0"><img src="./writeupImages/track1_thumb_nail.PNG"  width="300"></a></p> <p align="center"><a href="https://youtu.be/g91YVj5ysgc?t=14s"><img src="./writeupImages/track2_thumb_nail.jpg"  width="300"></a></p> 
+
+Since track 2 has land separation line in the middle which track 1 does not, it is quite hard to let the vehicle drive within its lane. Thus, when I recorded the laps, I simply ignored the lane separation line. 
+
+Overal the result is pretty, occasionally the vehicle would fall off the track for track 2, I believe with extensive image processing and furtuer model modification, it is doable to have the vehicle drive more accurately. However, given the time that I have, I am happy with the result.               
 
