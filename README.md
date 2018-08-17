@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./writeupImages/nVidia_model.png "nVidia model"
-[image2]: ./writeupImages/Track1Corner.png "Tricky corner in track 1"
+[image2]: ./writeupImages/Track1Corner.PNG "Tricky corner in track 1"
 [image3]: ./writeupImages/track1_distro_before.png "Raw image data distribution"
 [image4]: ./writeupImages/track1_distro_after.png "Raw image data distribution after normalization"
 [image5]: ./writeupImages/crop.png "Image crop"
@@ -172,7 +172,5 @@ Lastly, I found by tuning the learning rate smaller make the vehicle drives smoo
 
 Here is the final result:
 
-| <p align="center"><a href="https://youtu.be/Rnxg7CEsRx0"><img src="./writeupImages/track1_thumb_nail.png"  width="300"></a></p> | <p align="center"><a href="https://youtu.be/g91YVj5ysgc?t=14s"><img src="./writeupImages/track2_thumb_nail.jpg"  width="300"></a></p> |
-| ---------------------------------------- | ---------------------------------------- |
-| **Track 1 Video**                        | **Track 2 Video**                        |
+<p align="center"><a href="https://youtu.be/Rnxg7CEsRx0"><img src="./writeupImages/track1_thumb_nail.PNG"  width="300"></a></p> <p align="center"><a href="https://youtu.be/g91YVj5ysgc?t=14s"><img src="./writeupImages/track2_thumb_nail.jpg"  width="300"></a></p>                   
 
